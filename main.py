@@ -6,6 +6,7 @@ from google.appengine.ext import db
 
 class Comment(db.Model):
 	content = db.StringProperty(multiline = True)
+	name = db.StringProperty()
 	
 class  MainPage(webapp2.RequestHandler):
 	def get(self):
@@ -13,6 +14,9 @@ class  MainPage(webapp2.RequestHandler):
 		self.response.write(""" Enter your comment:
 		<form method ="post">
 		<input type= "textarea" name="post"></input>
+		</p> nombre:
+		<input type ="textarea" name ="nombre"> </input>
+		</p>
 		<input type= "submit"></input>
 		</form>""")
 		self.response.write('</body></html>')
@@ -21,6 +25,8 @@ class  MainPage(webapp2.RequestHandler):
 		self.response.write('<html><body><h1> Datastore Tutorial</h1>')
 		self.comment = Comment(content = self.request.get('post'))
 		self.comment.put()
+		self.name = Comment(name = self.request.get('post'))
+		self.name.put()
 		self.response.write('<p> You entered: </p><p>%s</p>' % self.request.get('post'))
 		self.response.write('</body></html>')
 		self.redirect('/')
